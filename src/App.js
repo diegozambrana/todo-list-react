@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Task } from './components/Task/task';
+import TestClassTODO, {TestFunction} from './components/test';
 
 const DATA = [
   {name: 'Tarea 1', completed: true, steps: []},
@@ -11,10 +12,14 @@ const DATA = [
 function App() {
   return (
     <div className="App container">
-      <div>
+      <TestClassTODO nombre={'Juan'} />
+      <TestClassTODO nombre={'Pepe'} />
+      <TestClassTODO nombre={'Ramon'} />
+      <TestFunction nombre={'Ramiro'}/>
+      {/* <div>
         Hola  esta es la primera APP, como esta?
         {DATA.map((task) => <Task item={task}/>)}
-      </div>
+      </div> */}
     </div>
   );
 }
