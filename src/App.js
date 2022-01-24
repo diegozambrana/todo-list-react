@@ -12,6 +12,7 @@ function App() {
   return (
     <div className="App container">
       <div>
+        Hola  esta es la primera APP, como esta?
         {DATA.map((task) => <Task item={task}/>)}
       </div>
     </div>

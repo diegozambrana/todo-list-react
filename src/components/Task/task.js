@@ -7,18 +7,20 @@ const Task = ({item}) => {
 
   return (
     <div className="task">
-      <div style={{marginRight: 16}}>
-        <Arrow
-          direction={showSteps ? 'up' : 'down'}
-          pointer
-          onClickArrow={() => {
-            setShowSteps((show) => setShowSteps(!show));
-          }}
-        />
-      </div>
-      <p className="task-text">{item.name}</p>
-      <div className="task-check">
-        <input type="checkbox" checked={item.completed}/>
+      <div className="task-container">
+        <div style={{marginRight: 16}}>
+          <Arrow
+            direction={showSteps ? 'up' : 'down'}
+            pointer
+            onClickArrow={() => {
+              setShowSteps((show) => setShowSteps(!show));
+            }}
+          />
+        </div>
+        <p className="task-text">{item.name}</p>
+        <div className="task-check">
+          <input type="checkbox" checked={item.completed}/>
+        </div>
       </div>
     </div>
   )

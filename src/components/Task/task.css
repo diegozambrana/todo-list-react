@@ -1,6 +1,6 @@
-.task{
+.task-container{
     display: flex;
-    
+    /* position: relative; */
     background-color: white;
     box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
     padding: 16px;
@@ -13,6 +13,12 @@
     text-align: left;
 }
 
-.task-check{
-    
+.task-steps{
+    /* position: absolute; */
+    background-color: red;
+    padding: 16px;
+    width: calc(100% - 32px);
+    left: 0;
+    bottom: 0;
+
 }
