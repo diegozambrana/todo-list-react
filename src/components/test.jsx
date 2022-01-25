@@ -42,6 +42,6 @@ export const TestFunction = ({nombre}) => {
     }, [nombre])
 
     return (
-        <div>{saludo} {nombres}</div>
+        <div>{saludo} {nombre}</div>
     )
 }
