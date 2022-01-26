@@ -1,6 +1,7 @@
 import React from 'react';
 import './task.css';
 import {Arrow} from '../icons/arrows';
+import {Step} from './components/Step';
 
 const Task = ({item}) => {
   const [showSteps, setShowSteps] = React.useState(false);
@@ -20,8 +21,13 @@ const Task = ({item}) => {
         <p className="task-text">{item.name}</p>
         <div className="task-check">
           <input type="checkbox" checked={item.completed}/>
-        </div>
+        </div> 
       </div>
+      { showSteps &&
+        <div className="step-wrapper">
+          {item.steps.map((step) => <Step step={step}/>)}
+        </div>
+      }
     </div>
   )
 };
