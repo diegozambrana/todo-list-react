@@ -1,0 +1,11 @@
+.input-container{
+    margin-top: 8px;
+}
+
+.input-text{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 4px;
+}
