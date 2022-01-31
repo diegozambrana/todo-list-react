@@ -4,13 +4,18 @@ import { Arrow } from '../../../../components/icons/arrows';
 import { TextBlock } from '../../../../components/TextBlock/TextBlock';
 import { Text } from '../../../../components/Text/Text';
 import { Input } from '../../../../components/Form/Input';
+import { Button } from '../../../../components/Button/Button';
 import { Step } from '../Step/Step';
 
-const Task = ({task}) => {
+const Task = ({task, onRemoveTask}) => {
   const [showSteps, setShowSteps] = React.useState(false);
 
   const handleCheckTask = (e) => {
     console.log(`handleCheckTask`, e.target.value)
+  }
+
+  const onRemove = () => {
+    if(onRemoveTask) onRemoveTask(task.id)
   }
 
   return (
@@ -41,6 +46,7 @@ const Task = ({task}) => {
             <Text text={'Descripción:'} type={`sub-sub-title`}/>
             <TextBlock text={task.description}/>
           </div>
+          <Button onClick={onRemove} danger value={'Eliminar Tarea'} />
         </div>
       }
       

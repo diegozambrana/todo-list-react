@@ -1,0 +1,14 @@
+.button{
+    border: none;
+    background: #2a73ff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    user-select: none;
+    cursor: pointer;
+}
+
+.button.danger{
+    background-color: #f5513f !important;
+}
