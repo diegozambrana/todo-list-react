@@ -16,6 +16,7 @@ const Task = ({task, onRemoveTask, onAddStep}) => {
   }
 
   const addStep = () => {
+    if(newStep.length < 3) return
     const data = {
       id: `${task.id}s${task.steps.length + 1}`,
       name: newStep,
