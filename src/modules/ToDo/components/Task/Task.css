@@ -1,3 +1,12 @@
+.check-mark{
+    position: absolute;
+    right: 12px;
+    top: 2px;
+    cursor: pointer;
+    color: #22c722;
+    user-select: none;
+    font-size: 24px;
+}
 .task-container{
     display: flex;
     /* position: relative; */

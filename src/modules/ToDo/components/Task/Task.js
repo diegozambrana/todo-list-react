@@ -7,11 +7,22 @@ import { Input } from '../../../../components/Form/Input';
 import { Button } from '../../../../components/Button/Button';
 import { Step } from '../Step/Step';
 
-const Task = ({task, onRemoveTask}) => {
+const Task = ({task, onRemoveTask, onAddStep}) => {
   const [showSteps, setShowSteps] = React.useState(false);
+  const [newStep, setNewStep] = React.useState('');
 
   const handleCheckTask = (e) => {
     console.log(`handleCheckTask`, e.target.value)
+  }
+
+  const addStep = () => {
+    const data = {
+      id: `${task.id}s${task.steps.length + 1}`,
+      name: newStep,
+      completed: false
+    }
+    onAddStep(task.id, data);
+    setNewStep('')
   }
 
   const onRemove = () => {
@@ -41,7 +52,14 @@ const Task = ({task, onRemoveTask}) => {
             ? task.steps.map((step) => <Step step={step} key={step.id}/>)
             : <Text text={'No existen pasos'} gray center/>
           }
-          <Input placeholder="Agregar nuevo paso"/>
+          <div style={{position: 'relative'}}>
+            <Input
+              placeholder="Agregar nuevo paso"
+              value={newStep}
+              onChange={(value) => setNewStep(value)}
+            />
+            <div className='check-mark' onClick={addStep}>&#9745;</div>
+          </div>
           <div className='description-block'>
             <Text text={'Descripción:'} type={`sub-sub-title`}/>
             <TextBlock text={task.description}/>

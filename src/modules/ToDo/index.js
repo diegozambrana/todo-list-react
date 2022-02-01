@@ -21,7 +21,25 @@ export const ToDoList = () => {
         setTodoData();
     }
 
+    const onAddStep = (idTask, newStep) => {
+        const newTodoData = todoData.map(task => {
+            if(task.id === idTask){
+                task.steps.push(newStep)
+                return task
+            }
+            return task
+        })
+        setTodoData(newTodoData);
+    }
+
     return (<>
-        {todoData.map((task) => <Task task={task} key={task.id} onRemoveTask={(id) => removeTask(id)}/>)}
+        {todoData.map((task) => (
+            <Task
+                task={task}
+                key={task.id}
+                onRemoveTask={(id) => removeTask(id)}
+                onAddStep={onAddStep}
+            />
+        ))}
     </>)
 }
