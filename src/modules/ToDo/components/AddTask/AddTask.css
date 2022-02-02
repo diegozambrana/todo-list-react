@@ -1,0 +1,11 @@
+.add-task-container{
+    background-color: white;
+    padding: 16px;
+}
+.add-task-button-container{
+    margin-top: 8px;
+    text-align: right;
+}
+.add-task-button-container button:last-child{
+    margin-left: 8px;
+}

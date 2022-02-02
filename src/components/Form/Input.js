@@ -1,7 +1,7 @@
 import React from 'react';
 import './Input.css'
 
-export const Input = ({value, onChange, placeholder, fullWidth}) => {
+export const Input = ({value, onChange, placeholder, fullWidth, onEnterPressed}) => {
   const handleChange = (event) => {
     if(onChange) onChange(event.target.value);
   }
@@ -15,6 +15,9 @@ export const Input = ({value, onChange, placeholder, fullWidth}) => {
         placeholder={placeholder}
         value={value}
         onChange={handleChange}
+        onKeyDown={(event) => (
+          event.key === 'Enter' && onEnterPressed && onEnterPressed()
+        )}
       />
     </div>  
   )

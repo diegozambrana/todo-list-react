@@ -6,19 +6,24 @@ import { Text } from '../../../../components/Text/Text';
 import { Input } from '../../../../components/Form/Input';
 import { Button } from '../../../../components/Button/Button';
 import { Step } from '../Step/Step';
+import { uuid } from '../../../../utils';
 
-const Task = ({task, onRemoveTask, onAddStep}) => {
+const Task = ({task, onRemoveTask, onAddStep, onCheckTask, onCheckStep}) => {
   const [showSteps, setShowSteps] = React.useState(false);
   const [newStep, setNewStep] = React.useState('');
 
-  const handleCheckTask = (e) => {
-    console.log(`handleCheckTask`, e.target.value)
+  const handleCheckTask = () => {
+    onCheckTask(task.id);
+  }
+
+  const handleStepChecked = (idStep) => {
+    onCheckStep(task.id, idStep) 
   }
 
   const addStep = () => {
     if(newStep.length < 3) return
     const data = {
-      id: `${task.id}s${task.steps.length + 1}`,
+      id: uuid(),
       name: newStep,
       completed: false
     }
@@ -32,7 +37,7 @@ const Task = ({task, onRemoveTask, onAddStep}) => {
 
   return (
     <div className="task">
-      <div className="task-container">
+      <div className={`task-container ${task.completed && 'completed'}`}>
         <div style={{marginRight: 16}}>
           <Arrow
             direction={showSteps ? 'up' : 'down'}
@@ -50,7 +55,7 @@ const Task = ({task, onRemoveTask, onAddStep}) => {
       { showSteps &&
         <div className="step-wrapper">
           { task.steps.length
-            ? task.steps.map((step) => <Step step={step} key={step.id}/>)
+            ? task.steps.map((step) => <Step step={step} key={step.id} onStepChecked={handleStepChecked}/>)
             : <Text text={'No existen pasos'} gray center/>
           }
           <div style={{position: 'relative'}}>
@@ -58,6 +63,7 @@ const Task = ({task, onRemoveTask, onAddStep}) => {
               placeholder="Agregar nuevo paso"
               value={newStep}
               onChange={(value) => setNewStep(value)}
+              onEnterPressed={addStep}
             />
             <div className='check-mark' onClick={addStep}>&#9745;</div>
           </div>
