@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Task.css';
 import { Arrow } from '../../../../components/icons/arrows';
 import { TextBlock } from '../../../../components/TextBlock/TextBlock';
@@ -11,6 +11,15 @@ import { uuid } from '../../../../utils';
 const Task = ({task, onRemoveTask, onAddStep, onCheckTask, onCheckStep}) => {
   const [showSteps, setShowSteps] = React.useState(false);
   const [newStep, setNewStep] = React.useState('');
+
+  useEffect(() => {
+    console.log(`Tarea`, task.name, `ha sido montada`)
+    // document.addEventListener('mousemove', (e) => {console.log(e.target.position)})
+    return () => {
+      console.log(`Tarea`, task.name, `ha sido desmontada`)
+      //document.removeEventListener('mousemove', (e) => {console.log(e.target.position)})
+    }
+  }, []);
 
   const handleCheckTask = () => {
     onCheckTask(task.id);

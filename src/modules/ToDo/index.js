@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { INITIAL_DATA } from '../../data';
 import { Task } from './components/Task/Task';
 import { AddTask } from './components/AddTask/AddTask';
@@ -9,6 +9,24 @@ import { Text } from '../../components/Text/Text';
 export const ToDoList = () => {
     const [todoData, setTodoData] = React.useState(INITIAL_DATA);
     const [isModalAddTaskOpen, setIsModalAddTaskOpen] = React.useState(false)
+    /* const [tasks, setTasks] = React.useState([]);
+    const [tasksCompleted, setTasksCompleted] = React.useState([])
+
+    useEffect(() => {
+        console.log(`----> tasks`, todoData, );
+        setTasks(todoData.filter(task => !task.completed))
+        setTasksCompleted(todoData.filter(task => task.completed))
+    }, [todoData]) */
+
+    const tasks = React.useMemo(() => todoData.length > 1
+        ? todoData.filter(task => !task.completed)
+        : []
+    , [todoData])
+
+    const tasksCompleted = React.useMemo(() => todoData.length > 1
+        ? todoData.filter(task => task.completed)
+        : []
+    , [todoData])
 
     const onCheckTask = (idTask) => {
         const newTodoData = todoData.map(task => task.id === idTask
@@ -55,8 +73,8 @@ export const ToDoList = () => {
     }
 
     return (<>
-        {todoData.length > 0 
-            ? todoData.map((task) => (
+        {tasks.length > 0 
+            ? tasks.map((task) => (
                 <Task
                     task={task}
                     key={task.id}
@@ -67,6 +85,19 @@ export const ToDoList = () => {
                 />
             ))
             : <Text text="No tiene tareas" gray/>
+        }
+        {tasksCompleted.length > 0 
+            ? tasksCompleted.map((task) => (
+                <Task
+                    task={task}
+                    key={task.id}
+                    onRemoveTask={(id) => removeTask(id)}
+                    onAddStep={onAddStep}
+                    onCheckTask={onCheckTask}
+                    onCheckStep={onCheckStep}
+                />
+            ))
+            : <Text text="No tiene tareas completadas" gray/>
         }
 
         <div style={{marginTop: 16}}>
