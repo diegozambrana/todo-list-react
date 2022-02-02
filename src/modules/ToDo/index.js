@@ -1,22 +1,14 @@
-import React, { useEffect } from 'react';
-import { INITIAL_DATA } from '../../data';
+import React from 'react';
 import { Task } from './components/Task/Task';
 import { AddTask } from './components/AddTask/AddTask';
 import { Modal } from '../../components/Modal/Modal';
 import { Button } from '../../components/Button/Button';
 import { Text } from '../../components/Text/Text';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export const ToDoList = () => {
-    const [todoData, setTodoData] = React.useState(INITIAL_DATA);
+    const {item: todoData, saveItem: setTodoData} = useLocalStorage('TODO', []);
     const [isModalAddTaskOpen, setIsModalAddTaskOpen] = React.useState(false)
-    /* const [tasks, setTasks] = React.useState([]);
-    const [tasksCompleted, setTasksCompleted] = React.useState([])
-
-    useEffect(() => {
-        console.log(`----> tasks`, todoData, );
-        setTasks(todoData.filter(task => !task.completed))
-        setTasksCompleted(todoData.filter(task => task.completed))
-    }, [todoData]) */
 
     const tasks = React.useMemo(() => todoData.length > 1
         ? todoData.filter(task => !task.completed)
@@ -73,6 +65,7 @@ export const ToDoList = () => {
     }
 
     return (<>
+        <Text gray text={`Total Tareas: ${ToDoList.length} - Por hacer: ${tasks.length}  - Completadas: ${tasksCompleted.length}`} />
         {tasks.length > 0 
             ? tasks.map((task) => (
                 <Task

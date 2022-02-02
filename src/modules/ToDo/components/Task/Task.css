@@ -46,3 +46,9 @@
 .description-block{
     padding: 0 8px;
 }
+.completed-text{
+    width: 72px;
+    color: gray;
+    text-align: right;
+    margin-right: 8px;
+}

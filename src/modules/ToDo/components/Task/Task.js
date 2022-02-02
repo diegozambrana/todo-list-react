@@ -12,6 +12,10 @@ const Task = ({task, onRemoveTask, onAddStep, onCheckTask, onCheckStep}) => {
   const [showSteps, setShowSteps] = React.useState(false);
   const [newStep, setNewStep] = React.useState('');
 
+  const completedNumberSteps = React.useMemo(() => {
+    return task.steps.filter(step => step.completed).length || 0;
+  }, [task])
+
   useEffect(() => {
     console.log(`Tarea`, task.name, `ha sido montada`)
     // document.addEventListener('mousemove', (e) => {console.log(e.target.position)})
@@ -57,6 +61,7 @@ const Task = ({task, onRemoveTask, onAddStep, onCheckTask, onCheckStep}) => {
           />
         </div>
         <p className="task-text">{task.name}</p>
+        <div className='completed-text'>{completedNumberSteps} / {task.steps.length}</div>
         <div className="task-check">
           <input type="checkbox" checked={task.completed} onChange={handleCheckTask}/>
         </div> 
