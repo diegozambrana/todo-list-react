@@ -5,20 +5,28 @@ import { Modal } from '../../components/Modal/Modal';
 import { Button } from '../../components/Button/Button';
 import { Text } from '../../components/Text/Text';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { Input } from '../../components/Form/Input';
 
 export const ToDoList = () => {
     const {item: todoData, saveItem: setTodoData} = useLocalStorage('TODO', []);
-    const [isModalAddTaskOpen, setIsModalAddTaskOpen] = React.useState(false)
+    const [isModalAddTaskOpen, setIsModalAddTaskOpen] = React.useState(false);
+    const [searchText, setSearchText] = React.useState('');
+    const filteredTodoData = React.useMemo(() => {
+        if(searchText){
+            return todoData.filter(task => task.name.includes(searchText));
+        }
+        return todoData;
+    }, [searchText, todoData])
 
-    const tasks = React.useMemo(() => todoData.length > 1
-        ? todoData.filter(task => !task.completed)
+    const tasks = React.useMemo(() => filteredTodoData.length > 0
+        ? filteredTodoData.filter(task => !task.completed)
         : []
-    , [todoData])
+    , [filteredTodoData])
 
-    const tasksCompleted = React.useMemo(() => todoData.length > 1
-        ? todoData.filter(task => task.completed)
+    const tasksCompleted = React.useMemo(() => filteredTodoData.length > 0
+        ? filteredTodoData.filter(task => task.completed)
         : []
-    , [todoData])
+    , [filteredTodoData])
 
     const onCheckTask = (idTask) => {
         const newTodoData = todoData.map(task => task.id === idTask
@@ -65,6 +73,8 @@ export const ToDoList = () => {
     }
 
     return (<>
+        <Input value={searchText} onChange={text => setSearchText(text) } placeholder={'Buscar'}/>
+        
         <Text gray text={`Total Tareas: ${ToDoList.length} - Por hacer: ${tasks.length}  - Completadas: ${tasksCompleted.length}`} />
         {tasks.length > 0 
             ? tasks.map((task) => (
