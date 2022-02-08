@@ -1,7 +1,7 @@
 import React from 'react';
 import './Text.css';
 
-export const Text = ({text, type, gray, center, fontWeight}) => {
+export const Text = ({text, type, gray, center, fontWeight, editable}) => {
 
     let styles = {};
 

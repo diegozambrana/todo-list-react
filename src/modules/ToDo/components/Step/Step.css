@@ -19,3 +19,8 @@
 .step:last-child{
     border-bottom: none;
 }
+.remove-step{
+    margin-left: 8px;
+    padding-top: 6px;
+    cursor: pointer;
+}

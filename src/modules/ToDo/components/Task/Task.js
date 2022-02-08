@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './Task.css';
 import { Arrow } from '../../../../components/icons/arrows';
 import { TextBlock } from '../../../../components/TextBlock/TextBlock';
@@ -7,30 +7,24 @@ import { Input } from '../../../../components/Form/Input';
 import { Button } from '../../../../components/Button/Button';
 import { Step } from '../Step/Step';
 import { uuid } from '../../../../utils';
+import { AppContext } from '../../../../context/TodoContext';
+import { EditText } from '../../../../components/EditText';
 
-const Task = ({task, onRemoveTask, onAddStep, onCheckTask, onCheckStep}) => {
+const Task = ({task, }) => {
   const [showSteps, setShowSteps] = React.useState(false);
   const [newStep, setNewStep] = React.useState('');
+  const {
+    removeTask,
+    onAddStep,
+    editTask,
+  } = React.useContext(AppContext);
 
   const completedNumberSteps = React.useMemo(() => {
     return task.steps.filter(step => step.completed).length || 0;
   }, [task])
 
-  useEffect(() => {
-    console.log(`Tarea`, task.name, `ha sido montada`)
-    // document.addEventListener('mousemove', (e) => {console.log(e.target.position)})
-    return () => {
-      console.log(`Tarea`, task.name, `ha sido desmontada`)
-      //document.removeEventListener('mousemove', (e) => {console.log(e.target.position)})
-    }
-  }, []);
-
   const handleCheckTask = () => {
-    onCheckTask(task.id);
-  }
-
-  const handleStepChecked = (idStep) => {
-    onCheckStep(task.id, idStep) 
+    editTask(task.id, 'completed', !task.completed)
   }
 
   const addStep = () => {
@@ -45,7 +39,7 @@ const Task = ({task, onRemoveTask, onAddStep, onCheckTask, onCheckStep}) => {
   }
 
   const onRemove = () => {
-    if(onRemoveTask) onRemoveTask(task.id)
+    removeTask(task.id)
   }
 
   return (
@@ -60,7 +54,12 @@ const Task = ({task, onRemoveTask, onAddStep, onCheckTask, onCheckStep}) => {
             }}
           />
         </div>
-        <p className="task-text">{task.name}</p>
+
+        <EditText
+          value={task.name}
+          className={'task-text'}
+          onComplete={(text) => editTask(task.id, 'name', text)}
+        />
         <div className='completed-text'>{completedNumberSteps} / {task.steps.length}</div>
         <div className="task-check">
           <input type="checkbox" checked={task.completed} onChange={handleCheckTask}/>
@@ -69,7 +68,13 @@ const Task = ({task, onRemoveTask, onAddStep, onCheckTask, onCheckStep}) => {
       { showSteps &&
         <div className="step-wrapper">
           { task.steps.length
-            ? task.steps.map((step) => <Step step={step} key={step.id} onStepChecked={handleStepChecked}/>)
+            ? task.steps.map((step) => (
+              <Step
+                step={step}
+                key={step.id}
+                taskId={task.id}
+              />
+            ))
             : <Text text={'No existen pasos'} gray center/>
           }
           <div style={{position: 'relative'}}>

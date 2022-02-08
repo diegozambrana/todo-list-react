@@ -1,0 +1,31 @@
+
+.edit-text{
+    margin: 0
+}
+.edit-text-input-wrapper{
+    position: relative;
+}
+.edit-text-input{
+    padding: 0; 
+    margin: 0;
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    background: #ddd;
+}
+.edit-text-actions{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    display: flex;
+}
+.edit-text-action{
+    font-size: 20px;
+    margin: 0 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.edit-text-actions-accept{color: #22c722;}
+.edit-text-actions-cancel{color: #f05b35;}

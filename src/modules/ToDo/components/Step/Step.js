@@ -1,18 +1,33 @@
 import React from 'react';
 import './Step.css'
+import { AppContext } from '../../../../context/TodoContext';
+import { EditText } from '../../../../components/EditText';
 
-export const Step = ({step, onStepChecked}) => {
 
-    const handleInputChange = (e) => {
-        if(onStepChecked) onStepChecked(step.id);
+export const Step = ({step, taskId}) => {
+    const { editStep, removeStep } = React.useContext(AppContext);
+
+    const onUpdateStep = (name, value) => {
+        editStep(taskId, step.id, name, value);
     }
+
+    const onRemoveStep = () => removeStep(taskId, step.id)
 
     return (
         <div className='step'>
-            <p className={`step-text ${step.completed ? 'complete' : ''}`}>{step.name}</p>
+            <EditText
+              value={step.name} 
+              onComplete={(value) => onUpdateStep('name', value)} 
+              className={`step-text ${step.completed ? 'complete' : ''}`}
+            />
             <div className="step-check">
-                <input type="checkbox" onChange={handleInputChange} checked={step.completed}/>
-            </div> 
+                <input
+                    type="checkbox"
+                    onChange={() => onUpdateStep('completed', !step.completed)}
+                    checked={step.completed}
+                />
+            </div>
+            <div className="remove-step" onClick={onRemoveStep}>x</div>
         </div>
     )
 }
