@@ -21,7 +21,7 @@ export const ToDoList = () => {
         setIsModalAddTaskOpen
     } = React.useContext(AppContext)
 
-    const {counter} = useSelector(s => s.todo)
+    const counter = useSelector(s => s.todo.counter)
     const dispatch = useDispatch()
 
     const renderTasks = (task) => <Task task={task} key={task.id} />
