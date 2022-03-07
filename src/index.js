@@ -4,11 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { TodoContext } from './context/TodoContext';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 ReactDOM.render(
   <React.StrictMode>
     <TodoContext>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </TodoContext>
   </React.StrictMode>,
   document.getElementById('root')

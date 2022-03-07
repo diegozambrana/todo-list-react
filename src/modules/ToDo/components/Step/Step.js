@@ -4,7 +4,7 @@ import { AppContext } from '../../../../context/TodoContext';
 import { EditText } from '../../../../components/EditText';
 
 
-export const Step = ({step, taskId}) => {
+export const Step = React.memo(({step, taskId}) => {
     const { editStep, removeStep } = React.useContext(AppContext);
 
     const onUpdateStep = (name, value) => {
@@ -30,4 +30,4 @@ export const Step = ({step, taskId}) => {
             <div className="remove-step" onClick={onRemoveStep}>x</div>
         </div>
     )
-}
+})

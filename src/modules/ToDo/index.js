@@ -6,6 +6,8 @@ import { Button } from '../../components/Button/Button';
 import { Text } from '../../components/Text/Text';
 import { Input } from '../../components/Form/Input';
 import { AppContext } from '../../context/TodoContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement }from '../../redux/slices/todo'
 
 export const ToDoList = () => {
     const {
@@ -19,9 +21,17 @@ export const ToDoList = () => {
         setIsModalAddTaskOpen
     } = React.useContext(AppContext)
 
+    const {counter} = useSelector(s => s.todo)
+    const dispatch = useDispatch()
+
     const renderTasks = (task) => <Task task={task} key={task.id} />
 
     return (<>
+        <p>counter: {counter}</p>
+        <div> 
+            <button onClick={() => dispatch(decrement())}>-</button>
+            <button onClick={() => dispatch(increment())}>+</button>
+        </div>
         <Input value={searchText} onChange={text => setSearchText(text) } placeholder={'Buscar'}/>
         
         <Text gray text={`Total Tareas: ${todoData.length} - Por hacer: ${tasks.length}  - Completadas: ${tasksCompleted.length}`} />
