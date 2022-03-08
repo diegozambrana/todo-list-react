@@ -8,20 +8,21 @@ import { Input } from '../../components/Form/Input';
 import { AppContext } from '../../context/TodoContext';
 import { useSelector, useDispatch } from 'react-redux';
 import { increment, decrement }from '../../redux/slices/todo'
+import { closeModalAddTask, openModalAddTask, addTask } from '../../redux/slices/todo';
 
 export const ToDoList = () => {
     const {
         todoData,
-        tasks,
-        tasksCompleted,
-        addTask,
+        // tasks,
+        // tasksCompleted,
+        // addTask,
         searchText,
         setSearchText,
-        isModalAddTaskOpen,
-        setIsModalAddTaskOpen
+        // isModalAddTaskOpen,
+        // setIsModalAddTaskOpen
     } = React.useContext(AppContext)
 
-    const counter = useSelector(s => s.todo.counter)
+    const {counter, isModalAddTaskOpen, tasks, tasksCompleted} = useSelector(s => s.todo)
     const dispatch = useDispatch()
 
     const renderTasks = (task) => <Task task={task} key={task.id} />
@@ -47,17 +48,17 @@ export const ToDoList = () => {
         <div style={{marginTop: 16}}>
             <Button
                 value="+ Agregar Tarea"
-                onClick={() => setIsModalAddTaskOpen(true)}
+                onClick={() => dispatch(openModalAddTask())}
             />
         </div>
 
         <Modal
             isOpen={isModalAddTaskOpen}
-            onClose={() => setIsModalAddTaskOpen(false)}
+            onClose={() => dispatch(closeModalAddTask())}
         >
             <AddTask
-                onAddTask={addTask}
-                onCancel={() => setIsModalAddTaskOpen(false)}
+                onAddTask={(data) => dispatch(addTask(data))}
+                onCancel={() => dispatch(closeModalAddTask())}
             />
         </Modal>
     </>)
