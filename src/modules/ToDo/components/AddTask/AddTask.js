@@ -9,7 +9,6 @@ import { Button } from '../../../../components/Button/Button';
 export const AddTask = ({onCancel, onAddTask}) => {
     const [data, setData] = React.useState({name: '', description: ''})
     const handleOnAccept = () => {
-        console.log(`handleOnAccept`, data)
         onAddTask({
             ...data,
             id: uuid(),

@@ -5,35 +5,35 @@ import { Modal } from '../../components/Modal/Modal';
 import { Button } from '../../components/Button/Button';
 import { Text } from '../../components/Text/Text';
 import { Input } from '../../components/Form/Input';
-import { AppContext } from '../../context/TodoContext';
 import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement }from '../../redux/slices/todo'
-import { closeModalAddTask, openModalAddTask, addTask } from '../../redux/slices/todo';
+import { closeModalAddTask, openModalAddTask, addTask, setSearchText } from '../../redux/slices/todoSlice';
 
 export const ToDoList = () => {
-    const {
-        todoData,
-        // tasks,
-        // tasksCompleted,
-        // addTask,
-        searchText,
-        setSearchText,
-        // isModalAddTaskOpen,
-        // setIsModalAddTaskOpen
-    } = React.useContext(AppContext)
-
-    const {counter, isModalAddTaskOpen, tasks, tasksCompleted} = useSelector(s => s.todo)
     const dispatch = useDispatch()
+    const [
+        isModalAddTaskOpen,
+        todoData,
+        filteredTodoData,
+        searchText,
+    ] = useSelector(s => [
+        s.todo.isModalAddTaskOpen,
+        s.todo.todoData,
+        s.todo.todoData.filter(task => task.name.includes(s.todo.searchText)),
+        s.todo.searchText
+    ])
+
+    const tasks = React.useMemo(() => 
+        filteredTodoData.filter(task => !task.completed)
+    , [filteredTodoData])
+
+    const tasksCompleted = React.useMemo(() => 
+        filteredTodoData.filter(task => task.completed)
+    , [filteredTodoData])
 
     const renderTasks = (task) => <Task task={task} key={task.id} />
 
     return (<>
-        <p>counter: {counter}</p>
-        <div> 
-            <button onClick={() => dispatch(decrement())}>-</button>
-            <button onClick={() => dispatch(increment())}>+</button>
-        </div>
-        <Input value={searchText} onChange={text => setSearchText(text) } placeholder={'Buscar'}/>
+        <Input value={searchText} onChange={text => dispatch(setSearchText(text)) } placeholder={'Buscar'}/>
         
         <Text gray text={`Total Tareas: ${todoData.length} - Por hacer: ${tasks.length}  - Completadas: ${tasksCompleted.length}`} />
         {tasks.length > 0 

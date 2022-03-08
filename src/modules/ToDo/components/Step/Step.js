@@ -1,17 +1,18 @@
 import React from 'react';
 import './Step.css'
-import { AppContext } from '../../../../context/TodoContext';
+import { useDispatch } from 'react-redux';
 import { EditText } from '../../../../components/EditText';
+import { editStep, removeStep } from '../../../../redux/slices/todoSlice';
 
 
-export const Step = React.memo(({step, taskId}) => {
-    const { editStep, removeStep } = React.useContext(AppContext);
+export const Step = React.memo(({step, idTask}) => {
+    const dispatch = useDispatch();
 
     const onUpdateStep = (name, value) => {
-        editStep(taskId, step.id, name, value);
+        dispatch(editStep({idTask, idStep: step.id, field: name, value}));
     }
 
-    const onRemoveStep = () => removeStep(taskId, step.id)
+    const onRemoveStep = () => dispatch(removeStep({idTask, idStep: step.id}))
 
     return (
         <div className='step'>

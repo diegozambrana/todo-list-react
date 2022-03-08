@@ -41,7 +41,6 @@ export const EditText = ({value, className, onComplete}) => {
           <div className="edit-text-actions">
             <div className="edit-text-actions-accept edit-text-action" onClick={onAccept}>&#9745;</div>
             <div className="edit-text-actions-cancel edit-text-action" onClick={onCancel}>x</div>
-
           </div>
         </div>
       )}

@@ -1,5 +1,6 @@
 import React from 'react';
 import './Task.css';
+import { useDispatch } from 'react-redux';
 import { Arrow } from '../../../../components/icons/arrows';
 import { TextBlock } from '../../../../components/TextBlock/TextBlock';
 import { Text } from '../../../../components/Text/Text';
@@ -7,24 +8,20 @@ import { Input } from '../../../../components/Form/Input';
 import { Button } from '../../../../components/Button/Button';
 import { Step } from '../Step/Step';
 import { uuid } from '../../../../utils';
-import { AppContext } from '../../../../context/TodoContext';
 import { EditText } from '../../../../components/EditText';
+import { removeTask, onAddStep, editTask} from '../../../../redux/slices/todoSlice';
 
 const Task = ({task, }) => {
+  const dispatch = useDispatch();
   const [showSteps, setShowSteps] = React.useState(false);
   const [newStep, setNewStep] = React.useState('');
-  const {
-    removeTask,
-    onAddStep,
-    editTask,
-  } = React.useContext(AppContext);
 
   const completedNumberSteps = React.useMemo(() => {
     return task.steps.filter(step => step.completed).length || 0;
   }, [task])
 
   const handleCheckTask = () => {
-    editTask(task.id, 'completed', !task.completed)
+    dispatch(editTask({idTask: task.id, field: 'completed', value: !task.completed}))
   }
 
   const addStep = () => {
@@ -34,12 +31,12 @@ const Task = ({task, }) => {
       name: newStep,
       completed: false
     }
-    onAddStep(task.id, data);
+    dispatch(onAddStep({idTask: task.id, newStep: data}));
     setNewStep('')
   }
 
   const onRemove = () => {
-    removeTask(task.id)
+    dispatch(removeTask(task.id))
   }
 
   return (
@@ -58,7 +55,7 @@ const Task = ({task, }) => {
         <EditText
           value={task.name}
           className={'task-text'}
-          onComplete={(text) => editTask(task.id, 'name', text)}
+          onComplete={(text) => dispatch(editTask({idTask: task.id, field:'name', value: text}))}
         />
         <div className='completed-text'>{completedNumberSteps} / {task.steps.length}</div>
         <div className="task-check">
@@ -72,7 +69,7 @@ const Task = ({task, }) => {
               <Step
                 step={step}
                 key={step.id}
-                taskId={task.id}
+                idTask={task.id}
               />
             ))
             : <Text text={'No existen pasos'} gray center/>
@@ -93,7 +90,6 @@ const Task = ({task, }) => {
           <Button onClick={onRemove} danger value={'Eliminar Tarea'} />
         </div>
       }
-      
     </div>
   )
 };
