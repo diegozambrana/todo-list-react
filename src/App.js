@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import { ToDoList } from './modules/ToDo';
+import { Login } from './modules/Auth/Login';
+import { Register } from './modules/Auth/Register';
 import { Text } from './components/Text/Text';
 
 function App() {
@@ -10,6 +12,8 @@ function App() {
         <Text text={'To Do List Project'} type="title"/>
       </div>
       <div>
+        {/* <Register /> */}
+        {/* <Login /> */}
         <ToDoList />
       </div>
     </div>

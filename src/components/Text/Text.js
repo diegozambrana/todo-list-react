@@ -10,13 +10,13 @@ export const Text = ({text, type, gray, center, fontWeight, editable}) => {
     if(center) styles['textAlign'] = 'center';
 
     if(type === 'title'){
-        return (<h2 className='title'>{text}</h2>)
+        return (<h2 className='title' style={styles}>{text}</h2>)
     }
     if(type === 'sub-title'){
-        return (<h3 className='sub-title'>{text}</h3>)
+        return (<h3 className='sub-title' style={styles}>{text}</h3>)
     }
     if(type === 'sub-sub-title'){
-        return (<h4 className='sub-sub-title'>{text}</h4>)
+        return (<h4 className='sub-sub-title' style={styles}>{text}</h4>)
     }
     return (<p className='body-text' style={styles}>{text}</p>)
 }

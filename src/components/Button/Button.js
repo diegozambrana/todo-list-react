@@ -1,9 +1,20 @@
 import React from 'react';
 import './Button.css';
 
-export const Button = ({value, danger,...props}) => {
+export const Button = ({value, danger, secondary, full, large, ...props}) => {
+    const className = `button ${
+        danger ? 'danger' : ''
+    } ${
+        full ? 'full' : ''
+    } ${
+        secondary ? 'secondary' : ''
+    } ${
+        large ? 'large' : ''
+    }`
 
     return (
-        <button className={`button ${danger ? 'danger' : ''}`} {...props}>{value}</button>
+        <button className={className} {...props}>
+            {value}
+        </button>
     )
 }

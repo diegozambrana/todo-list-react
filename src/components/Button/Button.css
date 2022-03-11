@@ -8,7 +8,18 @@
     user-select: none;
     cursor: pointer;
 }
-
+.button.secondary{
+    background-color: gray !important;
+}
 .button.danger{
     background-color: #f5513f !important;
+}
+
+.button.full{
+    width: 100%;
+}
+
+.button.large{
+    padding: 1rem;
+    font-size: 1rem;
 }
