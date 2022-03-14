@@ -9,3 +9,7 @@
     border: 1px solid rgba(0,0,0,0.2);
     border-radius: 4px;
 }
+
+.input-text.error{
+    border: 1px solid rgb(255 0 0);;
+}

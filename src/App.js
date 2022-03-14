@@ -12,9 +12,9 @@ function App() {
         <Text text={'To Do List Project'} type="title"/>
       </div>
       <div>
-        {/* <Register /> */}
+        <Register />
         {/* <Login /> */}
-        <ToDoList />
+        {/* <ToDoList /> */}
       </div>
     </div>
   );

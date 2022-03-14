@@ -7,15 +7,31 @@ import { Text } from "../../../components/Text/Text";
 import { FormGroup } from "../../../components/Form/FormGroup";
 import './Login.css'
 import { Alert } from "../../../components/Alert";
+import { validate } from "../../../utils";
 
 export const Login = () => {
   const [error, setError] = useState(false);
   const formRef = useRef();
+  const validationFields = {
+    email: ['required', 'email'],
+    password: ['required'],
+  }
+  const [errorMessages, setErrorMessages] = useState({
+    email: null,
+    password: null,
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
     const values = Object.fromEntries(formData);
+    Object.keys(values).forEach(key => {
+      console.log(`validate(validationFields[key])`, validate(values[key], validationFields[key]))
+      setErrorMessages(em => ({
+        ...em,
+        [key]: validate(values[key], validationFields[key])
+      }));
+    })
     console.log(values)
   }
 
@@ -29,6 +45,7 @@ export const Login = () => {
           <Input
             inputProps={{id: 'email', name: 'email'}}
             placeholder={'Correo Electrónico'}
+            error={errorMessages['email']}
           />
         </FormGroup>
 
@@ -38,6 +55,7 @@ export const Login = () => {
             inputProps={{id: 'password', name: 'password'}}
             placeholder={'Contraseña'}
             type={'password'}
+            error={errorMessages['password']}
           />
         </FormGroup>
 

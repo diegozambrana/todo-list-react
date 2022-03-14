@@ -1,7 +1,17 @@
 import React from 'react';
 import './Input.css'
+import { Alert } from '../Alert';
 
-export const Input = ({value, type, onChange, placeholder, fullWidth, onEnterPressed, inputProps}) => {
+export const Input = ({
+  value,
+  type,
+  onChange,
+  placeholder,
+  fullWidth,
+  onEnterPressed,
+  error,
+  inputProps
+}) => {
   const handleChange = (event) => {
     if(onChange) onChange(event.target.value);
   }
@@ -9,7 +19,7 @@ export const Input = ({value, type, onChange, placeholder, fullWidth, onEnterPre
   return (
     <div className={`input-container ${fullWidth ? 'full-width' : ''}`}>
       <input
-        className='input-text'
+        className={`input-text ${error ? 'error' : ''}`}
         type={type || "text"}
         placeholder={placeholder}
         value={value}
@@ -19,6 +29,7 @@ export const Input = ({value, type, onChange, placeholder, fullWidth, onEnterPre
         )}
         {...inputProps}
       />
+      {error && <Alert type="error">{error.join(', ')}</Alert>}
     </div>  
   )
 }
