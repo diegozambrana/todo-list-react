@@ -1,0 +1,28 @@
+.header{
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+.navigator{
+    padding: 0;
+    margin-bottom: 1rem;
+}
+.navigator li{
+    display: inline-block;
+    margin-right: 1rem;
+}
+
+.footer{
+    margin-top: 1rem;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding: 1rem;
+    text-align: center;
+}
+.footer a, .navigator li a{
+    text-decoration: none;
+    color: #2a73ff;
+}
+
+.nav-link.activate{
+    font-weight: bold;
+    text-decoration: underline;
+}

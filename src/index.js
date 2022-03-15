@@ -6,12 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import { TodoContext } from './context/TodoContext';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import { BrowserRouter } from "react-router-dom";
+
 
 ReactDOM.render(
   <React.StrictMode>
     <TodoContext>
       <Provider store={store}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </Provider>
     </TodoContext>
   </React.StrictMode>,

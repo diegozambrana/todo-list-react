@@ -26,13 +26,11 @@ export const Login = () => {
     const formData = new FormData(formRef.current);
     const values = Object.fromEntries(formData);
     Object.keys(values).forEach(key => {
-      console.log(`validate(validationFields[key])`, validate(values[key], validationFields[key]))
       setErrorMessages(em => ({
         ...em,
         [key]: validate(values[key], validationFields[key])
       }));
     })
-    console.log(values)
   }
 
   return (
