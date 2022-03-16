@@ -7,6 +7,7 @@ import { Text } from "../../../components/Text/Text";
 import { FormGroup } from "../../../components/Form/FormGroup";
 import { Alert } from "../../../components/Alert";
 import { validate } from "../../../utils";
+import { register } from "../../../apis/auth";
 
 export const Register = () => {
   const validationFields = {
@@ -52,6 +53,12 @@ export const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    register({...data, username: data['email']}).then((response) => {
+      console.log('response', response);
+    }, (error) => {
+      console.log(`Error`, error)
+    })
   }
 
   return (

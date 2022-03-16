@@ -1,5 +1,6 @@
 import { API_DOMAIN } from '../utils/constants';
 import { useState } from 'react';
+import axios from 'axios';
 
 export const useAuth = () => {
   const [response, setResponse] = useState();
@@ -14,7 +15,6 @@ export const useAuth = () => {
       },
       body: JSON.stringify(data)
     })
-    console.log(`->res`, res)
     const dataRes = await res.json()
     localStorage.setItem('token', dataRes.access)
     localStorage.setItem('refresh', dataRes.refresh)
@@ -28,5 +28,8 @@ export const useAuth = () => {
   return {authenticate, response, ...flags}
 }
 
+export const register = (data) => {
+  return axios.post(`${API_DOMAIN}/api/auth/register`, data)
+}
 
 // TODO: Register api http://localhost:8000/api/auth/register
