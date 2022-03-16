@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "../../../components/Button/Button";
 import { Card } from "../../../components/Card";
 import { Input } from "../../../components/Form/Input";
@@ -8,18 +8,24 @@ import { FormGroup } from "../../../components/Form/FormGroup";
 import './Login.css'
 import { Alert } from "../../../components/Alert";
 import { validate } from "../../../utils";
+import { useAuth } from '../../../apis/auth';
+import { Navigate } from 'react-router-dom'
 
 export const Login = () => {
-  const [error, setError] = useState(false);
+  const {authenticate, response, error, success} = useAuth()
   const formRef = useRef();
   const validationFields = {
-    email: ['required', 'email'],
+    username: ['required', 'email'],
     password: ['required'],
   }
   const [errorMessages, setErrorMessages] = useState({
-    email: null,
+    username: null,
     password: null,
   })
+  const isAuthenticated = useMemo(() => {
+    return success || localStorage.getItem('token')
+  }, [success])
+  useEffect(() => {console.log(`response`, response)}, [response])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,19 +37,24 @@ export const Login = () => {
         [key]: validate(values[key], validationFields[key])
       }));
     })
+    authenticate(values)
   }
+
+  if(isAuthenticated) return <Navigate to="/todo" />
 
   return (
     <Card>
       <Text type='sub-title' center text={'Login'}/>
-      {error && <Alert type="error" center>Error al inciar sesión.</Alert>}
+      {error && <Alert type="error" center>
+        {response?.detail || `Error al inciar sesión.`}
+      </Alert>}
       <form onSubmit={handleSubmit} ref={formRef}>
         <FormGroup>
-          <label htmlFor="email">Correo Electrónico</label>
+          <label htmlFor="username">Correo Electrónico</label>
           <Input
-            inputProps={{id: 'email', name: 'email'}}
+            inputProps={{id: 'username', name: 'username'}}
             placeholder={'Correo Electrónico'}
-            error={errorMessages['email']}
+            error={errorMessages['username']}
           />
         </FormGroup>
 
