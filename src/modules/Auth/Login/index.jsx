@@ -8,7 +8,7 @@ import { FormGroup } from "../../../components/Form/FormGroup";
 import './Login.css'
 import { Alert } from "../../../components/Alert";
 import { validate } from "../../../utils";
-import { useAuth } from '../../../apis/auth';
+import { useAuth, login } from '../../../apis/auth';
 import { Navigate } from 'react-router-dom'
 
 export const Login = () => {
@@ -38,6 +38,13 @@ export const Login = () => {
       }));
     })
     authenticate(values)
+    /* login(values, 
+      (response) => {
+        console.log(`callback response`, response)
+      }, (error) => {
+        console.error(`callbackError error`, error)
+      }
+    ) */
   }
 
   if(isAuthenticated) return <Navigate to="/todo" />
